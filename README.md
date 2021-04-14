@@ -11,6 +11,14 @@ When we present a new query image, it's computing the related feature vector fro
 
 ![diagram](../master/query.png)
 
+## Use Keras
+
+Refer to [src\](src\) and [visual-image-search.ipynb](visual-image-search.ipynb)
+
+## Use GluonCV
+
+Refer to [endpoint\](endpoint\) and [visual-image-search-gluoncv.ipynb](visual-image-search-gluoncv.ipynb), train script is [transfer_learning.ipynb](transfer_learning.ipynb)
+
 ## License
 
 This library is licensed under the MIT-0 License. See the LICENSE file.
