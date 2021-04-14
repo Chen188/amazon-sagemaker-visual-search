@@ -13,11 +13,11 @@ When we present a new query image, it's computing the related feature vector fro
 
 ## Use Keras
 
-Refer to [src\](src\) and [visual-image-search.ipynb](visual-image-search.ipynb)
+Refer to [src](src) and [visual-image-search.ipynb](visual-image-search.ipynb)
 
 ## Use GluonCV
 
-Refer to [endpoint\](endpoint\) and [visual-image-search-gluoncv.ipynb](visual-image-search-gluoncv.ipynb), train script is [transfer_learning.ipynb](transfer_learning.ipynb)
+Refer to [endpoint](endpoint) and [visual-image-search-gluoncv.ipynb](visual-image-search-gluoncv.ipynb), train script is [transfer_learning.ipynb](transfer_learning.ipynb)
 
 ## License
 
