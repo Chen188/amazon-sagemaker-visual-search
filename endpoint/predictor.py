@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import io
 import sys
 import json
 import os
@@ -15,6 +16,8 @@ gcv.utils.check_version('0.6.0')
 from gluoncv.data.transforms.presets.imagenet import transform_eval
 from gluoncv.model_zoo import get_model
 from mxnet.gluon import nn
+
+from PIL import Image
 
 # The flask app for serving predictions
 app = flask.Flask(__name__)
@@ -92,27 +95,35 @@ def invocations():
     #parse json in request
     print ("<<<< flask.request.content_type", flask.request.content_type)
 
-    data = flask.request.data.decode('utf-8')
-    data = json.loads(data)
-#     print(data)
+    
+    if flask.request.content_type == 'application/x-image':
+        image_as_bytes = io.BytesIO(flask.request.data)
+        img = Image.open(image_as_bytes)
+        download_file_name = 'tmp.jpg'
+        img.save(download_file_name)
+        print ("<<<<download_file_name ", download_file_name)
+    else:
+        data = flask.request.data.decode('utf-8')
+        data = json.loads(data)
+    #     print(data)
 
-    bucket = data['bucket']
-    image_uri = data['image_uri']
+        bucket = data['bucket']
+        image_uri = data['image_uri']
 
-    download_file_name = image_uri.split('/')[-1]
-    print ("<<<<download_file_name ", download_file_name)
+        download_file_name = image_uri.split('/')[-1]
+        print ("<<<<download_file_name ", download_file_name)
 
-    try:
-        s3_client.download_file(bucket, image_uri, download_file_name)
-        print('Download finished!')
-    except:
-        #local test
-        download_file_name = './1.jpg'
-        
-    print ("<<<<download_file_name ", download_file_name)
+        try:
+            s3_client.download_file(bucket, image_uri, download_file_name)
+            print('Download finished!')
+        except:
+            #local test
+            download_file_name = './1.jpg'
+
+        print ("<<<<download_file_name ", download_file_name)
     
     result = get_embedding_advance(download_file_name)
     
-    _payload = json.dumps(result, ensure_ascii=False)
+    _payload = json.dumps({'predictions': [result]}, ensure_ascii=False)
 
     return flask.Response(response=_payload, status=200, mimetype='application/json')
