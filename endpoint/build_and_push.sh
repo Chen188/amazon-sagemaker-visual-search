@@ -56,6 +56,8 @@ else
     $(aws ecr get-login --region ${region} --registry-ids 763104351884 --no-include-email)
 fi
 
+$(aws ecr get-login --region ${region} --no-include-email)
+
 # Build the docker image locally with the image name and then push it to ECR
 # with the full name.
 
