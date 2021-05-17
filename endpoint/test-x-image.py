@@ -12,6 +12,8 @@ print(r.json())
 
 # on sagemaker
 # python create_endpoint
+from io import BytesIO
+from PIL import Image
 import boto3
 from botocore.config import Config
 from boto3.session import Session
@@ -26,7 +28,15 @@ config = Config(
 
 def infer(input_image):
     image_uri = input_image
-    img = BytesIO(open(image_uri, 'rb').read())
+    if image_uri.endswith('png'):
+        im = Image.open(image_uri).convert('RGB')
+#         image_uri = 'tmp.jpg'
+#         im.save(image_uri)
+        buf = BytesIO()
+        im.save(buf, format='JPEG')
+        img = buf.getvalue()
+    else:
+        img = BytesIO(open(image_uri, 'rb').read())
     payload = img
 
     sagemaker_runtime_client = boto3.client('sagemaker-runtime', config=config)
@@ -41,4 +51,5 @@ def infer(input_image):
     result = json.loads(response["Body"].read())
     print (result)
 
-infer('1.jpg')
+# infer('1.jpg')
+infer('pi3small.png')
