@@ -5,7 +5,7 @@ Resources:
   NotebookInstance:
     Type: AWS::SageMaker::NotebookInstance
     Properties:
-      InstanceType: ml.t3.medium
+      InstanceType: ml.c5.xlarge
       RoleArn: !GetAtt Role.Arn
       DefaultCodeRepository: https://github.com/Chen188/amazon-sagemaker-visual-search
 
@@ -68,7 +68,7 @@ Resources:
             Resource: !Sub arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/*/*
       ElasticsearchVersion: 7.4
       ElasticsearchClusterConfig:
-        InstanceType: "t2.small.elasticsearch"
+        InstanceType: "m5.xlarge.elasticsearch"
       EBSOptions:
         EBSEnabled: True
         VolumeSize: 10
