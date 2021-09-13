@@ -173,7 +173,7 @@ def init_model():
     parser = argparse.ArgumentParser(description='Predict ImageNet classes from a given image')
     parser.add_argument('--model', type=str, default='ResNet50_v2',
                         help='name of the model to use')
-    parser.add_argument('--saved-params', type=str, default='model/model-0000.params',
+    parser.add_argument('--saved-params', type=str, default='endpoint/model/model-0000.params',
                         help='path to the saved model parameters')  # 'model/model-0000.params'
     # parser.add_argument('--input-pic', type=str, required=True,
     #                     help='path to the input picture')
