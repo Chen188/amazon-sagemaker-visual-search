@@ -15,7 +15,7 @@ def parse_arguments():
         "--endpoint_ecr_image_path",
         type=str,
         help=" ",
-#         default="343958593302.dkr.ecr.cn-northwest-1.amazonaws.com.cn/image-embedding"
+#         default="339850811039.dkr.ecr.cn-northwest-1.amazonaws.com.cn/image-embedding"
         default="579019700964.dkr.ecr.us-east-1.amazonaws.com/image-embedding"
     )
     parser.add_argument(

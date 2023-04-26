@@ -39,7 +39,7 @@ if not os.path.exists(saved_params):
 pretrained = True if saved_params == '' else False
 
 if not pretrained:
-    classes = [i for i in range(8)]
+    classes = [i for i in range(5)]
     net = get_model(model_name, classes=len(classes), pretrained=pretrained)
     net.load_parameters(saved_params)
     
