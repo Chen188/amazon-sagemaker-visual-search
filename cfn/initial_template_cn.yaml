@@ -5,9 +5,9 @@ Resources:
   NotebookInstance:
     Type: AWS::SageMaker::NotebookInstance
     Properties:
-      InstanceType: ml.t3.medium
+      InstanceType: ml.c5.xlarge
       RoleArn: !GetAtt Role.Arn
-      DefaultCodeRepository: https://gitee.com/whn09/amazon-sagemaker-visual-search
+      DefaultCodeRepository: https://github.com/Chen188/amazon-sagemaker-visual-search
 
   Role:
     Type: AWS::IAM::Role
@@ -44,13 +44,40 @@ Resources:
               - sagemaker.amazonaws.com
             Action:
               - 'sts:AssumeRole'
-          
+
   s3BucketTraining:
     Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: "AES256"
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        IgnorePublicAcls: false
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: BucketOwnerPreferred
+      AccessControl: AwsExecRead
 
   s3BucketHosting:
     Type: AWS::S3::Bucket
     Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: "AES256"
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        IgnorePublicAcls: false
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: BucketOwnerPreferred
+      AccessControl: AwsExecRead
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
@@ -68,7 +95,7 @@ Resources:
             Resource: !Sub arn:aws-cn:es:${AWS::Region}:${AWS::AccountId}:domain/*/*
       ElasticsearchVersion: 7.4
       ElasticsearchClusterConfig:
-        InstanceType: "t2.small.elasticsearch"
+        InstanceType: "m5.xlarge.elasticsearch"
       EBSOptions:
         EBSEnabled: True
         VolumeSize: 10
@@ -107,4 +134,4 @@ Outputs:
       - ''
       - - 'https://console.amazonaws.cn/sagemaker/home?region=cn-northwest-1#/notebook-instances/openNotebook/'
         - !GetAtt NotebookInstance.NotebookInstanceName
-        - '?view=classic'
+        - '?view=lab'

@@ -44,7 +44,7 @@ Resources:
               - sagemaker.amazonaws.com
             Action:
               - 'sts:AssumeRole'
-          
+
   s3BucketTraining:
     Type: AWS::S3::Bucket
     Properties:
@@ -54,6 +54,13 @@ Resources:
               SSEAlgorithm: "AES256"
       VersioningConfiguration:
         Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        IgnorePublicAcls: false
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: BucketOwnerPreferred
+      AccessControl: AwsExecRead
 
   s3BucketHosting:
     Type: AWS::S3::Bucket
@@ -64,6 +71,13 @@ Resources:
               SSEAlgorithm: "AES256"
       VersioningConfiguration:
         Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        IgnorePublicAcls: false
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: BucketOwnerPreferred
+      AccessControl: AwsExecRead
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
@@ -120,4 +134,4 @@ Outputs:
       - ''
       - - 'https://console.aws.amazon.com/sagemaker/home?region=us-east-1#/notebook-instances/openNotebook/'
         - !GetAtt NotebookInstance.NotebookInstanceName
-        - '?view=classic'
+        - '?view=lab'
