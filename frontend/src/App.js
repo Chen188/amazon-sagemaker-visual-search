@@ -196,7 +196,7 @@ class App extends React.Component {
             <Paper className={classes.paper}>
               Step 2:<p/>
               Provide an image to search against. Choose an image of a dress, like the one here from the Zolando dataset: <p/>
-              <Link href='https://i4.ztat.net/large/VE/12/1C/14/8K/12/VE121C148-K12@10.jpg' target="_blank" rel="noreferrer">https://i4.ztat.net/large/VE/12/1C/14/8K/12/VE121C148-K12@10.jpg</Link>
+              <Link href='https://tmp-sharing.s3.cn-north-1.amazonaws.com.cn/images/1.png' target="_blank" rel="noreferrer">https://tmp-sharing.s3.cn-north-1.amazonaws.com.cn/images/1.png</Link>
             </Paper>
           </Grid>
 

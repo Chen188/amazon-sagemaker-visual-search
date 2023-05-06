@@ -7,8 +7,7 @@ import requests
 from urllib.parse import urlparse
 from io import BytesIO
 
-from elasticsearch import Elasticsearch, RequestsHttpConnection
-from requests_aws4auth import AWS4Auth
+from opensearchpy import OpenSearch, RequestsHttpConnection, AWSV4SignerAuth
 
 # Global variables that are reused
 sm_runtime_client = boto3.client('sagemaker-runtime')
@@ -69,15 +68,9 @@ def lambda_handler(event, context):
 
     session = boto3.session.Session()
     credentials = session.get_credentials()
-    awsauth = AWS4Auth(
-        credentials.access_key,
-        credentials.secret_key,
-        region,
-        service,
-        session_token=credentials.token
-        )
+    awsauth = AWSV4SignerAuth(credentials, region, service)
 
-    es = Elasticsearch(
+    es = OpenSearch(
         hosts=[{'host': elasticsearch_endpoint, 'port': 443}],
         http_auth=awsauth,
         use_ssl=True,
